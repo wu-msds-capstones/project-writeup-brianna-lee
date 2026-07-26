@@ -1,1 +1,42 @@
 # Background
+
+## Ovarian Cancer Epidemiology
+
+The most recent "Annual Report to the Nation on the Status of Cancer"<sup>2a</sup>, published in 2025, analyzes cancer trends through 2021 or 2022, depending on data availability in the United States. According to this report, Ovarian cancer, a sex-specific cancer impacting only individuals assigned female-sex at birth, is the 11th most prevalent cancer type in U.S. females from 2017-2021 (excluding 2020), when adjusted for age-standardization among various cancer types, with an incidence of 10.4 (95% CI: 10.3-10.5) per 100,000 women<sup>2a</sup>. However, in the lagged observation period from 2018-2022, ovarian cancer was the fifth-highest cancer contributing to mortality in women (6.0 [95% CI: 6.0-6.1] per 100,000 women)<sup>2a</sup>. 
+
+Following the all-cancer trends<sup>2b</sup>, mortality rates have steadily decreased and 5-year survival rates have steadily increased, particularly since 2005<sup>2c</sup>. Given, the discrepancy between ovarian cancer case incidence and mortality mortiality, this cancer is considered highly lethal due to it's hidden development<sup>2d</sup>. The 5-year mortality rate, based on estimates from 2016-2022, is 52%<sup>2c</sup>. However, this estimate varies drastically by stage of diagnosis. 
+
+Stage of cancer diagnosis describe how far cancer cells have travelled from their place of origin in the body. In reference to ovarian cancer, there are 4 major staging categories, each containing various incremenatal sub-stages<sup>2e</sup>. 
+
+**Stage I**
+In stage I diagnoses, cancer cells remain in one ovary, both ovaries or the fallopian tubes. Depending on the sub-stage, cancer cells may be found on the outer surface of affected organs and/or in fluid or washings from the abdomen and pelvis.
+
+**Stage II**
+In stage II diagnoses, cancer cells originate in one- , both ovaries or the fallopian tubes, and have spread to other organs within the abdomen. Cancer cells have not yet spread to nearby lymph nodes or distant sites. 
+
+**Stage III**
+In stage III diagnoses, cancer cells originate in one- , both ovaries or the fallopian tubes, and have spread to lymph nodes and/or nearby organs outside of the pelvis. Cancer cells have not yet spread to distant sites. 
+
+**Stage IV**
+In stage IV diagnoses, cancer cells originate in one- , both ovaries or the fallopian tubes and have spread to organs or tissues outside of the peritoneal cavity, distant lymph nodes, liver and/or spleen. 
+
+5-year survival rate for ovarian cancer diagnosed in stages I & II are estimated to be around 91.9%. Once initial diagnosis occurs in stage III, 5-year survival rates decrease to 70.1%. If cancer is diagnosted in the most advanced stages, IV, 5-year mortality rates drop to 31.5%<sup>2c</sup>. 
+
+Unfortunately, a majority of ovarian cancer cases (54%) are diagnosed in stage IV, followed by 18% in stage III, 22% percent in stages I and II and 6% unknown staging assessments at time of diagnosis<sup>2c</sup>. 
+
+## Current Diganosis Mechanisms
+
+The inverse relationship between stage at diagnosis and disease prognosis, paired with high rates of late-stage diagnosis, emphasize the need for healthcare researchers and providers to assess weaknesses in the current ovarian cancer screening landscape. 
+
+## Theories in Clinical Presentation - Early Stages
+
+## Electronic Health Record Data
+
+## Machine Learning Technique Trade-Offs
+
+
+2a - https://acsjournals.onlinelibrary.wiley.com/doi/full/10.1002/cncr.35833
+2b - https://seer.cancer.gov/statfacts/html/all.html
+2c - https://seer.cancer.gov/statfacts/html/ovary.html
+2d - https://journals.sagepub.com/doi/full/10.1369/0022155411428469
+2e - https://www.cancer.org/cancer/types/ovarian-cancer/detection-diagnosis-staging/staging.html
