@@ -28,11 +28,38 @@ Unfortunately, a majority of ovarian cancer cases (54%) are diagnosed in stage I
 
 The inverse relationship between stage at diagnosis and disease prognosis, paired with high rates of late-stage diagnosis, emphasize the need for healthcare researchers and providers to assess weaknesses in the current ovarian cancer screening landscape. 
 
-## Theories in Clinical Presentation - Early Stages
+An effective screening mechanism for a disease is a test that can be run on asymptomatic persons to effectively detect presence of sub-clinical disease. Under this definition, there are currently no screening mechanisms used to detect ovarian cancer<sup>2f</sup>. Additionally, symptoms of ovarian cancer are vague and inspecific, leading to delays in post symptomatic testing.
 
-## Electronic Health Record Data
+**Symptoms of Ovarian Cancer Include**
++ abdominal bloating
++ gastrointestinal symptoms
++ pain in the abdomen, pelvis, back or legs
++ post menopausal bleeding
++ sluggishness
++ unexplained weight gain
++ urinary symptoms
+
+An effort to capture specificity in these symptoms by creating a symptom index such as, the Goff Symptom Index. These indexes quantify experience of highly correlated symptoms, intensity and persistence over time to estimate likelihood for ovarian cancer diagnosis. While this has provided some correlation between symptoms and odds of eventual diagnosis, due to differences in individual symptom surveillance, performance of the tool remains best when compared with healthy controls at high-risk for ovarian cancer, aware of their risk status<sup>2g</sup>. Implementation of risk screening tools have notably lower sensitivities for low-risk populations screened in primary care settings (43.8% to 56.9-83.3%)<sup>2h</sup>.
+
+If symptoms are identified and determined to be a presentation of high-risk by a provider, a series of clinical labs or procedures may take place to indicate presence of disease. This may include a transvaginal ultrasound, which may identify masses in the ovaries, but will not differentiate between malignant and benign masses<sup>2e</sup>. Additionally, a CA-125 blood test may indicate presence of the disease, but high blood concentrations are also associated with conditions other than ovarian cancer and ovarian cancer cases may not present with high blood concentrations<sup>2e</sup>. 
+
+## Electronic Health Record (EHR) Data
+
+Previous research indicates there may be distinct symptom and risk patterns associated with eventual ovarian cancer diagnosis. However, previous index-scoring systems have primarily been applied through active survey design, rather than passive surveillance of clinical symptom reporting, outside of the context of patient-awareness to ovarian cancer risk reporting. 
+
+While understanding symptom patterns under active surveillance methods provides some insight into early clinical presentation, it may introduce bias, keeping these approaches from distinctly identifying patterns in low-risk or low-symptom groups. 
+
+This research will explore whether patterns can be found in the passive survellience of notes documented in clinical interactions prior to an ovarian cancer diagnosis. These notes are found in electronic health record of a patient, digital versions of patient charts, allowing the clinical notes to be analyzed in context of the patient's other clinical data<sup>2i</sup>. 
 
 ## Machine Learning Technique Trade-Offs
+
+While clinical notes offer a depth of individual patient interactions, their singularity as measurements makes it challenging to find patterns within and between groups without data transformation. 
+
+Vectorization or embedding are necessary steps to create meaningful measurements of similarity between individual clinical notes. While vectorization can create all possible word/phrase combinations and count frequencies, text embeddings allow for quantification of all smaller units (tokens) of text to be assessed in similarity with other tokens. 
+
+These two different methods for processing and quantifying text-based data each have a benefit and trade-off. In the case of vectorization, frequency of words or phrases are kept in a highly interpretable format. Patterns derived from analyses highlight features that represent direct phrases from clinical notes, allowing for full transparency in the relationships identified. This has the capacity to directly translate into clinical pratice improvement because the patterns can be detected in future interactions, without new data requiring model inference. This approach is limited by the capacity for similarity between distinct phrases to be captured and aggregated.
+
+In the case of embedding-based analyses, multi-dimensionality similarity can be accounted for. This allows for variation in clinical note phrasing to exist while maintaining relational distance between notes. This will likely yield richer results, however the interpretability of these results into improved clinical practice may be limited.  
 
 
 2a - https://acsjournals.onlinelibrary.wiley.com/doi/full/10.1002/cncr.35833
@@ -40,3 +67,7 @@ The inverse relationship between stage at diagnosis and disease prognosis, paire
 2c - https://seer.cancer.gov/statfacts/html/ovary.html
 2d - https://journals.sagepub.com/doi/full/10.1369/0022155411428469
 2e - https://www.cancer.org/cancer/types/ovarian-cancer/detection-diagnosis-staging/staging.html
+2f - Penny, S. M. (2020). Ovarian cancer: an overview. Radiologic technology, 91(6).
+2g - Goff, B. A., Mandel, L. S., Drescher, C. W., Urban, N., Gough, S., Schurman, K. M., Patras, J., Mahony, B. S. & Andersen, M. R. (2007). Development of an ovarian cancer symptom index: possibilities for earlier detection. Cancer, 109(2), 221-227.
+2h - Funston, G., Hardy, V., Abel, G., Crosbie, E. J., Emery, J., Hamilton, W., & Walter, F. M. (2020). Identifying ovarian cancer in symptomatic women: a systematic review of clinical tools. Cancers, 12(12), 3686.
+2i - https://healthit.gov/health-it-basics/benefits-ehrs/
