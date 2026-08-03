@@ -1,1 +1,110 @@
 # Data
+
+## Data Ingestion
+
+### Source Databases
+
+All data ingested for this project came from Providence St. Joesph's Clinical and Tumor Registry Databases. This collection of databases consists of many nested schema and tables, with various person identification variables between different source databases. This data is a collection of patient care data within Providence's medical system, including tumor registry, tumor stage grading, patient demographic, clinical encounters, clinical notes and clinical diagnosis data. Each data source is briefly described below:
+
+##### Tumor Registry
+
+This source data consists of all documented tumors assessed at Providence, starting with their Electronic Health Record (EHR) implementation. Data here is stored uniquely with the field \[CANCER_TUMOR_KEY\] and connected to other cancer tables using the \[PATIENT_KEY\] field. Data was filtered into malignant and analytic tumors only and then separated into ovarian and non-ovarian tumors for case and cancer control group ascertainment, as later described, using ICD-C ontology codes.
+
+##### Tumor Stage Grading
+
+This source data consists of all documentation stage grading applied to unique tumors, assessed within providence. Stage of tumor at diagnosis data needed to be merged to tumor observations for future analysis. Given an individual tumor, represented by a unique \[CANCER_TUMOR_KEY\] can have more than 1 stage estimation documented, representing differing clinical opinions. When multiple stages were present for a given tumor, 1 stage was selected using the following hierarchy:
+
+**First ordering by assessment type**
+
+1.  Pathological
+2.  Clinical
+3.  Other
+
+**THEN ordering by staging method within assessment type**
+
+1.  8th Edition
+2.  7th Edition
+3.  6th Edition
+4.  Earlier Edition
+
+**THEN ordering by more recent date**
+
+##### OMOP: Patient Demographics
+
+This source data provided patient-level demographic variables, such as: race, ethnicity, date of birth and address. This data, in the common data model Observational Medical Outcomes Partnership (OMOP), exist in a different schema from the cancer data. To merge these sources together, a connector table of patient identification variables must be used. The cancer data uses the patient key, which may not be de-duplicated at the actual person level, due to multiple medical record numbers (MRNs) often existing for more than 1 distinct person. The cancer patient field \[PATIENT_KEY\] was joined to a many-to-one table to get a unique \[PATIENT_MASTER_KEY\] value, which has been normalized by Providence's clinical informatics teams to best represent an individual patient. These unique values then match one-to-one to the patient field used in all OMOP tables \[PERSON_ID\].
+
+##### OMOP: Clinical Encounters
+
+This source data also exists in the OMOP schema and is organized with the same patient variables as the OMOP person demographics. This data consists of clinical health encounters, or visits, documented in a patient's EHR. This data contains information about the encounter, such as: date, visit type and provider type These observations are uniquely organized by \[VISIT_OCCURRENCE_ID\].
+
+##### OMOP: Clinical Notes
+
+This source data also exists in the OMOP schema and is organized with the same patient variables as the OMOP person demographics. This data consists of all free-text note fields in a patient's EHR, organized by person and date and is organized in long-format, with many observations per unique person.
+
+##### OMOP: Clinical Diagnoses
+
+This source data also exists in the OMOP schema and is organized with the same patient variables as the OMOP person demographics. This data consists of all clinical diagnoses associated with a unique person stemming from standardized clinical ontologies, such as ICD-10 and SNOMED. This data is also organized as many-to-one patient.
+
+### Pre-processing
+
+##### Case & Control Ascertainment
+
+The final analytic case list consists of persons from **one** case group and **two** control groups. 
+
+Descriptions of each group and observation counts of their derivation are as follows:
+
+###### Case Group: Ovarian Cancer Cases
+
+Case events consisted of the first malignant tumor with an ICD-C code indicating the tumor was ovarian cancer, where stage information is reported for the tumor evaluation. Persons were considered eligible for case events if they had general electronic health record data in the medical system, along with tumor data, were documented as "Female", at least 18 years old at the time of diagnosis and had a minimum of 2 clinical notes documented prior to the diagnosis date. The index date for this group is considered the date of first eligible tumor diagnosis. 
+
+*Commentary on data nuance:* Some patients had tumor data without electronic health record data because Providence has a tumor registry database for patients who recieve clinical care outside of their facilities. Due to the reliance of our methodology on clinical notes, we could not include these patients.
+
+###### Control Group 1: Similar Cancer Events, Other than Ovarian
+
+Other cancer control events consisted of the first malignant tumor where stage information is reported for the tumor evaluation. Persons were considered eligible for case events if they had general electronic health record data in the medical system, along with tumor data, were documented as "Female", at least 18 years old at the time of diagnosis, had a minimum of 2 clinical notes documented prior to the diagnosis date and no documented prior history of Ovarian cancer. The index date for this group is considered the date of first eligible tumor diagnosis. 
+
+
+Eligible cancer controls were then matched to cases - using a 3-1 ratio and two step process:
+
+**Step 1** Propensity scores were calculated using logistic regression of all case and eligible controls matching features:
+
++ Age at diagnosis
++ Race
++ Ethncity
++ Year of diagnosis
++ Number of clinical notes prior to diagnosis
++ Stage of tumor at initial diagnosis
+
+**Step 2** Controls were then matched using a K-nearest neighbor machine learning classification model to select the best matches per case. Restrictions were added to the machine learning model so each control could only be matched up to 1 case/time.
+
+
+###### Control Group 2: Non-cancer controls
+
+The second control group contains similar patients to the case events, with no cancer documentation
+
+Non-cancer control events were eligible to be matched if they were primary care visits with at least 2 clinical notes documented prior to the visit date. Persons were considered eligible for case events if they had general electronic health record data in the medical system, were documented as "Female", at least 18 years old at the time of diagnosis and had no documented prior history of cancer. The index date for this group is considered the date of primary care visit. 
+
+*Commentary on data nuance:* Future planned methodology relies on chronological ordering of the clinical documentation occurring prior to a health care event where a patient is either diagnosed with cancer (case and control group 1) or NOT diagnosed with cancer (control group 2). This required indexing of the non-cancer controls on a clinical event where the patient could be eligible to be diagnosed with a chronic condition. This was the reasoning behind selecting primary care visits, where patient assessment was likely to be wholistic, as opposed to care focused on a singular acute event, such as an ER or Urgent care visit. 
+
+Eligible non-cancer controls were then matched to cases using a 5-1 ratio and two step process:
+
+**Step 1** Propensity scores were calculated using logistic regression of all case and eligible controls matching features:
+
++ Age at diagnosis
++ Race
++ Ethncity
++ Year of index event
++ Number of clinical notes prior to index event
+
+**Step 2** Controls were then matched using a K-nearest neighbor machine learning classification model to select the best matches per case. Restrictions were added to the machine learning model so each unique person in the control events could only be matched up to 1 case/time. 
+
+##### Calculation of Index Event-Based Features
+
+The calculation of certain features related to the index were carried over from case and control ascertainment processes and left in the final PersonEvents table. These fields are - AGE_AT_DIAGNOSIS and NOTE_COUNT. While this data could technically continue to be derived from other many-to-one tables connected to the PERSON_ID throughout analysis, a decision was made to leave the calculated fields in the aggregate tables as well, due to their larger tables containing personally identifying information (PII). Aggregating age and note count prior to visit at the index event level, allows date of birth and the clinical note table to only be brought into analysis when needed, serving as a safeguard for personal data in certain analyses.
+
+
+### Data Organization
+
+All data sources described above have been filtered from the source database to include only observations pertaining to a case or control person selected for analysis. Data was then normalized to meet third normal form and align best with analytic expectations, as described in the following ERD.
+
+
