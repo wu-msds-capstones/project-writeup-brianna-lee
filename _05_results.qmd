@@ -1,1 +1,49 @@
 # Results
+
+## Method 1 - Vectorization Prior to Manual Filtering 
+
+### 0-6 Months Prior to Index Date
+
+The following graph shows the top 20 phrases appearing in 0-6 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-ovarian cancer proportion. Few themes emerge due to noise of documentation. 
+
+The following graph shows the top 20 phrases appearing in 0-6 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-cancer proportion. Few themes emerge due to noise of documentation. 
+
+The following graph shows the top 20 phrases appearing in 0-6 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-ovarian cancer proportion, after manual filter for phrases indicating clinical relevance from the top 100 phrases. In this analysis, mild themes of smoking status, sitting/standing assistance needed, cardiac events, mucousal membrane dysfunction and covid-19 history. Without context of the entire clinical note and clinican review, these themes provide only initial flags to be explored in a more rigourous comparative analysis. 
+
+The following graph shows the top 20 phrases appearing in 0-6 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-cancer proportion, after manual filter for phrases indicating clinical relevance from the top 100 phrases. In this analysis, mild themes of smoking status, sitting/standing assistance needed, cardiac events, mucousal membrane dysfunction, covid-19 history, depression and hypothyroidism emerge. Without context of the entire clinical note and clinican review, these themes provide only initial flags to be explored in a more rigourous comparative analysis. 
+
+### 6-12 Months Prior to Index Date
+
+The following graph shows the top 20 phrases appearing in 6-12 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-ovarian cancer proportion. Few themes emerge due to noise of documentation. 
+
+The following graph shows the top 20 phrases appearing in 6-12 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-cancer proportion. Few themes emerge due to noise of documentation. 
+
+The following graph shows the top 20 phrases appearing in 6-12 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-ovarian cancer proportion, after manual filter for phrases indicating clinical relevance from the top 100 phrases. In this analysis, mild themes of smoking, cardiac events, airway distruption, nausea and chronic pain emerge. Without context of the entire clinical note and clinican review, these themes provide only initial flags to be explored in a more rigourous comparative analysis. 
+
+The following graph shows the top 20 phrases appearing in 6-12 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-cancer proportion, after manual filter for phrases indicating clinical relevance from the top 100 phrases. In this analysis mild themes of smoking, nausea, depression, social stress, airway dysfunction and sore throat. Without context of the entire clinical note and clinican review, these themes provide only initial flags to be explored in a more rigourous comparative analysis. 
+
+## Method 2 - Random Forest Classifier
+
+The following table shows the results of the four random forest model classifers assessed: 
+
+| Model Description | Group | Recall | Precision | F1-Score | Accuracy |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| 200-Dimension Vector, All Time Points |  |  |  |  | 56% |
+|  | Ovarian Cancer | 0.10 | 0.24 | 0.15 |  | 
+|  | Non-Ovarian Cancer | 0.15 | 0.47 | 0.22 |  | 
+|  | Non-Cancer | 0.89 | 0.59 | 0.71 |  | 
+| 200-Dimension Vector, Only 2 years prior to Index Date |  |  |  |  | 59% |
+|  | Ovarian Cancer | 0.12 | 0.27 | 0.17 |  | 
+|  | Non-Ovarian Cancer | 0.09 | 0.46 | 0.14 |  | 
+|  | Non-Cancer | 0.93 | 0.61 | 0.74 |  | 
+| 10-Dimension Vector, All Time Points |  |  |  |  | 55% |
+|  | Ovarian Cancer | 0.12 | 0.21 | 0.15 |  | 
+|  | Non-Ovarian Cancer | 0.17 | 0.45 | 0.25 |  | 
+|  | Non-Cancer | 0.86 | 0.59 | 0.70 |  | 
+| 10-Dimension Vector, Only 2 years prior to Index Date |  |  |  |  | 58% |
+|  | Ovarian Cancer | 0.13 | 0.22 | 0.17 |  | 
+|  | Non-Ovarian Cancer | 0.07 | 0.44 | 0.12 |  | 
+|  | Non-Cancer | 0.92 | 0.61 | 0.73 |  | 
+
+
+
