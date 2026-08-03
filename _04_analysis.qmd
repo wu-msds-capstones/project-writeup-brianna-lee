@@ -1,1 +1,70 @@
 # Analysis
+
+## Description of Case & Control Groups
+
+In order to appropriately assess subsequent model results, the case and each control group needed to be described using a series of univariate statistics, disaggregated by group. Key differences in variables used for control-group propensity matching were assessed to determine matching was conducted effectively. Other clinical covariates were also described between groups to understand differences in risk-factors for ovarian cancer diagnosis among case and control groups. 
+
+## A Note on Clinical Notes
+
+The primary interest of this analysis is if unstructured text data, stored as distinct, various clinical notes in a patient's electronic health record data may contain patterns indicating early signs of ovarian cancer prior to diagnsis. In order to use these text data, they must be transformed into a numeric format that can be analyzed for prediction. Each method for transformation and analysis of text data has benefits and trade-offs and to demonstrate this, two different approaches will be explored. 
+
+**Method 1** consists of vectorizing common phrases and comparing frequency counts. While this method is the least complex and most noisy, conclusions drawn from this would be directly implementible into clinical practice because the features analyzed retain much of their original meaning. 
+
+**Method 2** consists of embedding the clinical notes in a medical language specific encoder and using these embeddings in a random forest model. This model allows for the most-specificity in determing similarity between notes but results would yield reduced understanding because features remain in embeded values that do not directly relate to changes that can be made in clinical practice. 
+
+## Comparative Method 1: Vectorization Counts
+
+The first method used to assess differences in clincal documentation between ovarian cancer and control groups was text vectorization and frequency analysis. In this analysis, all phrases of 3-7 words were extracted and compared accross all documents for frequency. Vectorization was conducted on notes in the following sets of time relative to the index date:
+
++ 0-6 months prior to the index date (not including the index date)
++ 6-12 months prior to the index date
++ 12-18 months prior to the index date
++ 18-24 months prior to the index date
++ 24-30 months prior to the index date
++ 30-36 months prior to the index date
++ Greater than 36 months prior to the index date
+
+For each set of time, up to 10,000 of the most common phrases were extracted from the documents as counts per document. Common english words were ignored but vectorization tools did not have the capacity to skip over common terms from medical records in any specificity. Phrases were extracted only if they were included in atleast 5 notes within the time set. Phrases that appeared in greater than 95% of the documents were also ignored. 
+
+### Group-Specific Ratio
+
+These phrase counts per note were then aggregated to indicate if each unique person's medical record had contained the phrase in the specified time period. Each phrase and time-point was then aggregated to group level proportion, expressing proportion of the case or control group, where the phrase was recorded during the time period. 
+
+### Group Comparison Ratio
+
+These ovarian cancer group proportion was then compared to each control group's proportion to measure excess of documentation in the case group, when compared to each respective control group. 
+
+### Filtering of Uninformative Phrases
+
+Preliminary Results of the vector models revealed many of the commonly occurring phrases were uninformative, causing noise in interpretation. An initial systematic layer of filtering occurred, with the intent to filter out medication related information. This data does exist in sturctured portions of the medical record and is best suited to be analyzed as such. To acheive this, phrases containing the following substrings were filtered out:
+
++ mg
++ ul
++ ml
++ mcg 
++ g
++ l
++ kg
++ mg/dl
++ mmol/l
++ mEq/L
++ mL/min
++ IU/L
++ units
++ labcorp
++ mmol
+
+A second layer of manual filtering occurred to find meaningful themes in the vectors, as shown in the results section. Although not ideal, manual review was required to find themes in the an attempt to explore this very generalizable method for analysis. 
+
+## Comparative Method 2: Embedding and Random Forest Classifier
+
+To transform clinical notes data into embeddings they were analyzed using a medical-specific encoder-only text embedding model from SciSpacy. These embeddings yielded a 200-dimension vector for each observation. These vectors were explore in their full expression, as well as a 10-dimension version, reduced with principle component analysis (PCA) techniques and then further reduced with UMAP to 2-dimensions. 
+
+### Random Forest Models
+
+Random forest models included relevant time-frames and dimension-levels, as described below. In addition, all models included a feature indicating how close to the index date the observation was. Training and testing data was split using an 80%/20% divide using a stratefied group approach. Strata were grouped along unique persons, so that all of an indivdual's clinical notes were either in the training or testing dataset. Each train/test split was assessed for similarity based on inclusion of time-frames prior to index date and outcome variable. Models weighted 5-1-1 towards the ovarian cancer group to optimize towards the more-rare outcome of interest. 
+
+### Combinations of Time-frames and Vector Dimensions
+
+Multiple combinations of time-period inclusion and vector dimension were analyzed to see if predictive capacity could be improved by adjusting either. The following two timeframes were explored - all notes and only notes occurring in the 2 years prior to the index. The following two vector dimensions were also explored - 200-dimension, non-reduced embedding and 10-dimension PCA reduced dimension. 
+
