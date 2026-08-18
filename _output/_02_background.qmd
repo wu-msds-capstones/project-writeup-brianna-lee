@@ -1,0 +1,53 @@
+# Background
+
+Prior to analysis, this report will cover the key components of ovarian cancer diagnosis and mortality research. First, rates of ovarian cancer occurrence and deaths will be described. Then, limitations of current screening tools and approaches will be depicted. Next, benefits and challenges of using electronic health record (EHR) data for predicting future cancer diagnoses will be outlined. Finally, the trade-offs of using vector-based or embedding-based machine learning models will be defined. 
+
+### Ovarian Cancer Epidemiology
+
+The most recent *Annual Report to the Nation on the Status of Cancer*<sup>5</sup>, published in 2025, analyzes cancer trends through 2021 or 2022, depending on data availability in the United States. According to this report, ovarian cancer, a sex-specific cancer impacting only individuals assigned female at birth, is the 11th most prevalent cancer type in U.S. females from 2017-2021 (excluding 2020), when adjusted for age-standardization among various cancer types, with an incidence of 10.4 (95% CI: 10.3-10.5) per 100,000 women<sup>5</sup>. However, in the lagged observation period from 2018-2022, ovarian cancer was the fifth-highest cancer contributing to mortality in women (6.0 [95% CI: 6.0-6.1] per 100,000 women)<sup>5</sup>. 
+
+Following the all-cancer trends<sup>6</sup>, mortality rates have steadily decreased, particularly since 2005<sup>7</sup>. Given the discrepancy between ovarian cancer diagnoses and mortality, this cancer is considered highly lethal<sup>8</sup>. The 5-year mortality rate, or percentage of people diagnosed who live the next five years, is about 52%<sup>7</sup>. However, this survival rate varies by stage of diagnosis. 
+
+Stage of cancer diagnosis describes how far cancer cells have traveled from their place of origin in the body. In reference to ovarian cancer, there are 4 major staging categories, each containing various incremental sub-stages<sup>9</sup>. Generally, higher stages represent higher severity due to greater spread of cancer cells from their original location. Description of these stages can be found in *Appendix A*. 
+
+5-year survival rate for ovarian cancer diagnosed in stages I & II is estimated to be around 91.9%. When initial diagnosis occurs in stage III, 5-year survival rates decrease to 70.1%. If cancer is diagnosed in the most advanced stages (IV), 5-year survival rates drop to 31.5%<sup>7</sup>. 
+
+Unfortunately, a majority of ovarian cancer cases (54%) are diagnosed in stage IV<sup>7</sup>, contributing to the overall high mortality rate.
+
+### Current Diagnosis Mechanisms
+
+The inverse relationship between stage at diagnosis and disease prognosis, paired with high rates of late-stage diagnosis, emphasize the need for innovative methods for predicting disease occurrence in earlier stages. 
+
+An effective screening mechanism for a disease is a test that can be run on persons without symptoms to effectively detect presence of sub-clinical disease. Under this definition, there are currently no screening mechanisms used to detect ovarian cancer<sup>10</sup>. Additionally, symptoms of ovarian cancer are vague and unspecific.
+
+**Symptoms of Ovarian Cancer Include**
+
++ Abdominal bloating
++ Gastrointestinal symptoms
++ Pain in the abdomen, pelvis, back or legs
++ Post menopausal bleeding
++ Sluggishness
++ Unexplained weight gain
++ Urinary symptoms
+
+There have been efforts by clinicians and researchers to capture specificity in these symptoms by creating a symptom index such as, the Goff Symptom Index. These indexes quantify presence, intensity and persistence over time, of symptoms, to estimate likelihood for ovarian cancer diagnosis. While this has provided some correlation between symptoms and odds of eventual diagnosis, due to differences in individual symptom surveillance, performance of the tool remains best when compared with healthy controls at high-risk for ovarian cancer, aware of their risk status<sup>11</sup>. Implementation of risk screening tools have notably lower sensitivities for low-risk populations screened in primary care settings <sup>12</sup>.
+
+If symptoms are identified and a provider refers a patient for testing, a series of clinical labs or procedures may take place to indicate presence of disease. This can include a trans-vaginal ultrasounds and/or CA-125 blood tests<sup>9</sup>. However, neither have been effective screening techniques in asymptomatic populations. 
+
+### Electronic Health Record (EHR) Data
+
+Previous research indicates there may be distinct symptom and risk patterns associated with an eventual ovarian cancer diagnosis. Yet, previous index-scoring systems have primarily been applied through active survey design, rather than passive surveillance of clinical symptom reporting, outside of the context of patient-awareness to ovarian cancer risk reporting. 
+
+While understanding symptom patterns under active surveillance methods provides some insight into early clinical presentation, it may introduce bias, keeping these approaches from distinctly identifying patterns in low-risk or low-symptom groups. 
+
+This research will explore whether patterns can be found in the passive surveillance of notes documented in clinical interactions prior to an ovarian cancer diagnosis. These notes are found in electronic health record of a patient, digital versions of patient charts, allowing the clinical notes to be analyzed in context of other clinical data<sup>13</sup>. 
+
+### Machine Learning Technique Trade-Offs
+
+While clinical notes offer depth of individual patient interactions, their singularity as measurements makes it challenging to find patterns within and between groups without data transformation. 
+
+Vectorization or embedding are necessary steps to create meaningful measurements of similarity between individual clinical notes. While vectorization can create all possible word/phrase combinations and count frequencies, text embedding allow for quantification of all smaller units (tokens) of text to be assessed in similarity with other tokens. 
+
+These two different methods for processing and quantifying text-based data each have a benefit and trade-off. In the case of vectorization, frequency of words or phrases are kept in a highly interpretative format. Patterns derived from analyses highlight features that represent direct phrases from clinical notes, allowing for full transparency in the features identified. This has the capacity to directly translate into clinical practice improvement because the patterns can be detected in future interactions, without new data requiring model inference. This approach is limited by the capacity for similarity between distinct phrases to be captured and aggregated.
+
+In the case of embedding-based analyses, multidimensional similarity can be accounted for. This allows for variation in clinical note phrasing to exist while maintaining relational distance between notes. This will likely yield richer results, however the generalizability of these results into improved clinical practice may be limited.  
