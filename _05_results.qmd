@@ -1,33 +1,55 @@
 # Results
 
-## Method 1 - Vectorization Prior to Manual Filtering 
+### Method 1 - Vectorization Models
 
-### 0-6 Months Prior to Index Date
+Due to various levels of noise in phrase-based vectorization models, this report will focus on the cluster-based vectorization models. Please see **Appendix E** for visualizations of the top phrases in each time period for the phrase-based frequency analysis. 
 
-The following graph shows the top 20 phrases appearing in 0-6 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-ovarian cancer proportion. Few themes emerge due to noise of documentation. 
+#### 6-12 Months Prior to Diagnosis
 
-The following graph shows the top 20 phrases appearing in 0-6 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-cancer proportion. Few themes emerge due to noise of documentation. 
+In the 6-12 months prior to diagnosis, relative to non-ovarian cancer controls, the following phrase-person ratio's are observed among clustered themes. 
 
-The following graph shows the top 20 phrases appearing in 0-6 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-ovarian cancer proportion, after manual filter for phrases indicating clinical relevance from the top 100 phrases. In this analysis, mild themes of smoking status, sitting/standing assistance needed, cardiac events, mucousal membrane dysfunction and covid-19 history. Without context of the entire clinical note and clinican review, these themes provide only initial flags to be explored in a more rigourous comparative analysis. 
+![Figure 4: Phrase Ratio for Clustered Themes 6-12 Months Prior to Index Date, Comparing Ovarian Cases to Non-Ovarian Cancer Controls](ov_no_ov_6_12_cluster_plot.png)
 
-The following graph shows the top 20 phrases appearing in 0-6 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-cancer proportion, after manual filter for phrases indicating clinical relevance from the top 100 phrases. In this analysis, mild themes of smoking status, sitting/standing assistance needed, cardiac events, mucousal membrane dysfunction, covid-19 history, depression and hypothyroidism emerge. Without context of the entire clinical note and clinican review, these themes provide only initial flags to be explored in a more rigourous comparative analysis. 
+Most phrase ratios drop under 1, indicating the clustered themes are not appearing in persons with ovarian cancer more than individuals with other types of cancer. Notably, phrases referring to divorce, swelling, chronic pain, nausea, airway and smoking are observed more frequently in cases, relative to controls. 
 
-### 6-12 Months Prior to Index Date
+Relative to non-cancer controls, the following phrase-person ratio's are observed among clustered themes. 
 
-The following graph shows the top 20 phrases appearing in 6-12 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-ovarian cancer proportion. Few themes emerge due to noise of documentation. 
+![Figure 5: Phrase Ratio for Clustered Themes 6-12 Months Prior to Index Date, Comparing Ovarian Cases to Non-Cancer Controls](ov_no_can_6_12_cluster_plot.png)
 
-The following graph shows the top 20 phrases appearing in 6-12 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-cancer proportion. Few themes emerge due to noise of documentation. 
+Similar themes emerge, with phrases referring to divorce, swelling, airway and nausea are observed more frequently in cases, relative to controls. 
 
-The following graph shows the top 20 phrases appearing in 6-12 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-ovarian cancer proportion, after manual filter for phrases indicating clinical relevance from the top 100 phrases. In this analysis, mild themes of smoking, cardiac events, airway distruption, nausea and chronic pain emerge. Without context of the entire clinical note and clinican review, these themes provide only initial flags to be explored in a more rigourous comparative analysis. 
+#### 0-6 Months Prior to Index Date
 
-The following graph shows the top 20 phrases appearing in 6-12 months prior to the index date, when comparing the ovarian cancer observation proportion to the non-cancer proportion, after manual filter for phrases indicating clinical relevance from the top 100 phrases. In this analysis mild themes of smoking, nausea, depression, social stress, airway dysfunction and sore throat. Without context of the entire clinical note and clinican review, these themes provide only initial flags to be explored in a more rigourous comparative analysis. 
+Moving closer to the diagnosis date, in the 0-6 months prior to diagnosis, relative to non-ovarian cancer controls, the following phrase-person ratio's are observed among clustered themes. 
 
-## Method 2 - Random Forest Classifier
+![Figure 6: Phrase Ratio for Clustered Themes 0-6 Months Prior to Index Date, Comparing Ovarian Cases to Non-Ovarian Cancer Controls](ov_no_ov_0_6_cluster_plot.png)
 
-The following table shows the results of the four random forest model classifers assessed: 
+Phrase ratios across all clusters are greater than 1, indicating the clustered themes are appearing in persons with ovarian cancer more than individuals with other types of cancer. The highest phrase ratios observed are for phrases related to swelling, cardiac, smoking and divorce. 
+
+Relative to non-cancer controls, the following phrase-person ratio's are observed among clustered themes. 
+
+![Figure 7: Phrase Ratio for Clustered Themes 0-6 Months Prior to Index Date, Comparing Ovarian Cases to Non-Cancer Controls](ov_no_can_0_6_cluster_plot.png)
+
+Similar themes emerge, with phrases referring to smoking, cardiac, divorce and nausea leading in frequently among cases, relative to controls. 
+
+
+### Method 2 - Embedding of Clinical Notes and Random Forest Classifier
+
+#### Notes Embedding
+
+As described in the methodology section, 2 stages of dimension reduction on embedded notes values occurred.  Prior to use in a classifier model, embedded points in the reduced UMAP dimensions were plotted, but no obvious clustering of these values by group were observed:
+
+
+![Figure 8: Scatter Plot of UMAP Embedded Dimensions](umap_1_2_plot.png)
+
+#### Random Forest Classifier
+
+The following table shows the results of the four random forest model classifiers assessed: 
+
+**Table 2: Random Forest Model Results for 200- and 10-Dimension Models With and Without Time Restriction**
 
 | Model Description | Group | Recall | Precision | F1-Score | Accuracy |
-| :--- | :---: | :---: | :---: | :---: | :---: |
+| :-----: | :-------: | :-----: | :---: | :---: | :---: |
 | 200-Dimension Vector, All Time Points |  |  |  |  | 56% |
 |  | Ovarian Cancer | 0.10 | 0.24 | 0.15 |  | 
 |  | Non-Ovarian Cancer | 0.15 | 0.47 | 0.22 |  | 
@@ -45,5 +67,5 @@ The following table shows the results of the four random forest model classifers
 |  | Non-Ovarian Cancer | 0.07 | 0.44 | 0.12 |  | 
 |  | Non-Cancer | 0.92 | 0.61 | 0.73 |  | 
 
-
+Accuracy, ability of a model to appropriate categorize all observations to the correct group, for all random forest models ranges from 56-59%, meaning no model was able to correctly categorize all notes from either a case or control group more than 59% of the time. Precision, ability of a model to appropriately categorize observations for a specific group, differed for case and control groups. Each model's precision for correctly categorizing notes for ovarian cancer cases ranged from 0.21-0.24, meaning no model was able to correctly categorize notes from cases correctly more than 24% of the time. 
 
