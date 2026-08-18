@@ -1,0 +1,20 @@
+# References
+
+1. Cleveland Clinic. (2026, June 11). Ovarian Cancer. https://my.clevelandclinic.org/health/diseases/4447-ovarian-cancer.
+2. Caruso G, Weroha SJ, Cliby W. Ovarian Cancer: A Review. JAMA. 2025;334(14):1278–1291. doi:10.1001/jama.2025.9495
+3. Chan JK, Tian C, Kesterson JP, Monk, BJ, Kapp DS, Davidson, B, Robertson S, Copeland LJ, Walker,
+JL, Wenham RM, Casablanca Y, Spirtos NM, Tewari KS, Bell JG. Symptoms of Women With High-Risk Early-Stage Ovarian Cancer. Obstetrics & Gynecology 139(2):p 157-162, February 2022. | DOI:
+10.1097/AOG.0000000000004642
+4. González-Castro L, Chávez M, Duflot P, Bleret V, Martin AG, Zobel M, Nateqi J, Lin S, Pazos-Arias JJ, Del Fiol G. Machine Learning Algorithms to Predict Breast Cancer Recurrence Using Structured and Unstructured
+Sources from Electronic Health Records. Cancers. 2023; 15(10):2741.
+https://doi.org/10.3390/cancers15102741
+5. Sherman RL, Firth AU, Henley SJ, et al. Annual Report to the Nation on the Status of Cancer, featuring state-level statistics after the onset of the COVID-19 pandemic. Cancer. 2025;e35833. doi:10.1002/cncr.35833
+6. National Institutes of Health. (n.d.). Cancer Stat Facts: Cancer of Any Type. https://seer.cancer.gov/statfacts/html/all.html.
+7. National Institutes of Health. (n.d.). Cancer Stat Facts: Ovarian Cancer. https://seer.cancer.gov/statfacts/html/ovary.html.
+8. Yoneda A, Lendorf ME, Couchman JR, & Multhaupt HA. (2012). Breast and ovarian cancers: a survey and possible roles for the cell surface heparan sulfate proteoglycans. Journal of Histochemistry & Cytochemistry, 60(1), 9-21.
+9. American Cancer Society. (2025, August 8). Ovarian cancer stages. https://www.cancer.org/cancer/types/ovarian-cancer/detection-diagnosis-staging/staging.html.
+10. Penny SM. (2020). Ovarian cancer: an overview. Radiologic technology, 91(6).
+11. Goff BA, Mandel LS, Drescher CW, Urban N, Gough S, Schurman KM, Patras J, Mahony BS & Andersen MR. (2007). Development of an ovarian cancer symptom index: possibilities for earlier detection. Cancer, 109(2), 221-227.
+12. Funston G, Hardy V, Abel G, Crosbie EJ, Emery J, Hamilton W & Walter FM. (2020). Identifying ovarian cancer in symptomatic women: a systematic review of clinical tools. Cancers, 12(12), 3686.
+13. Office of the National Coordinator for Health Information Technology. (2025, December 10). Electronic health records and their benefits. https://healthit.gov/health-it-basics/benefits-ehrs/.
+14. Tan Y, Lv H, Zhan Y, Ma G, Xiong B & Yang C. (2025, July). Boxlm: Unifying structures and semantics of medical concepts for diagnosis prediction in healthcare. In Forty-second International Conference on Machine Learning.
